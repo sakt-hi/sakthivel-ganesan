@@ -141,24 +141,80 @@
     font-size: 10px;
   }
   .command-line {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: 25px auto;
+    align-items: center;
+    height: auto;
+    min-height: 48px;
     padding-left: 12px;
     padding-right: 9px;
-    gap: 7px;
+    column-gap: 7px;
+    row-gap: 0;
     font-size: 9px;
   }
   .command-line .shell-prompt {
+    grid-column: 1;
+    grid-row: 1;
     font-size: 9px;
   }
   .command-line input {
+    grid-column: 2;
+    grid-row: 1;
     font-size: 10px;
   }
-  .statusbar {
-    gap: 10px;
-    padding: 0 8px;
-    font-size: 8px;
+  .command-line input::placeholder {
+    opacity: 0;
   }
-  .statusbar span:nth-last-child(2) {
+  .command-hint {
+    display: block;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    align-self: start;
+    padding: 2px 0 4px;
+    color: var(--faint);
+    font: 8px/1.35 var(--mono);
+  }
+  .command-line .run-command {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .statusbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    box-sizing: border-box;
+    width: 100%;
+    gap: 8px;
+    padding: 0 8px;
+    font-size: 7px;
+  }
+  .statusbar .status-context {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .statusbar .status-spacer,
+  .statusbar .status-search {
     display: none;
+  }
+  .statusbar .status-context > span,
+  .statusbar .status-language {
+    white-space: nowrap;
+  }
+  .statusbar .status-language {
+    justify-self: end;
+  }
+  .statusbar .status-context > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    line-height: 1;
+  }
+  .statusbar .status-dot {
+    width: 5px;
+    height: 5px;
+    flex-basis: 5px;
   }
   .doc h1 {
     font-size: 27px;
@@ -329,9 +385,6 @@
   .terminal-status {
     font-size: 8px;
   }
-  .statusbar span:nth-child(4) {
-    display: none;
-  }
   .search-footer {
     font-size: 7px;
   }
@@ -389,8 +442,8 @@
   }
   .primary-action,
   .secondary-action {
-    font-size: 9px;
-    padding: 10px;
+    font-size: 13px;
+    padding: 11px 13px;
     gap: 10px;
   }
   .search-scrim {
@@ -499,12 +552,17 @@
   .theme-picker .theme-icon {
     display: block;
     position: absolute;
-    left: 5px;
-    top: 4px;
-    z-index: 0;
-    color: var(--green);
-    font: 17px/20px var(--sans);
+    inset: 0;
+    display: grid;
+    place-items: center;
+    z-index: 2;
+    color: var(--accent-readable);
     pointer-events: none;
+  }
+  .theme-picker .theme-icon svg {
+    display: block;
+    width: 17px;
+    height: 17px;
   }
   .theme-picker select {
     position: relative;
@@ -513,8 +571,12 @@
     height: 30px;
     max-width: 40px;
     padding: 0 0 0 4px;
-    color: transparent;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent;
+    font-size: 0;
     background-color: transparent;
+    background-image: none;
+    appearance: none;
     background-position:
       calc(100% - 8px) 12px,
       calc(100% - 4px) 12px;
@@ -522,6 +584,7 @@
   .theme-picker select option {
     color: var(--text);
     background: var(--panel);
+    font-size: 12px;
   }
 }
 

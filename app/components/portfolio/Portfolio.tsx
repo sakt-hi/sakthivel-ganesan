@@ -268,19 +268,22 @@ export default function Portfolio() {
                 spellCheck={false}
                 placeholder="Type a command, or use the portfolio map above"
               />
+              <span className="command-hint">Type a command, or use the portfolio map above</span>
               <button className="run-command" type="submit" aria-label="Run command">
                 ↵
               </button>
             </form>
           </section>
           <footer className="statusbar">
-            <span>
-              <b>◉</b> Sakthivel · AI engineer
-            </span>
-            <span>Chennai, India</span>
+            <div className="status-context">
+              <span>
+                <i className="status-dot" aria-hidden="true" /> Sakthivel · AI engineer
+              </span>
+              <span>Chennai, India</span>
+            </div>
             <span className="status-spacer" />
-            <span>⌘K search</span>
-            <span>{current.kind}</span>
+            <span className="status-search">⌘K search</span>
+            <span className="status-language">{current.kind}</span>
           </footer>
         </main>
         <aside

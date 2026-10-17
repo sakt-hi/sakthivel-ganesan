@@ -1,4 +1,5 @@
 import type { ChangeEvent } from "react";
+import { Palette } from "lucide-react";
 import type { Theme } from "@/app/types/portfolio";
 import { themeOptions } from "@/app/data/themes";
 
@@ -54,7 +55,7 @@ export function PortfolioHeader({
       <label className="theme-picker">
         <span className="theme-label">THEME</span>
         <span className="theme-icon" aria-hidden="true">
-          ◐
+          <Palette size={17} strokeWidth={1.8} />
         </span>
         <select aria-label="Choose color theme" value={theme} onChange={handleThemeChange}>
           <optgroup label="Dark themes">
