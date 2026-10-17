@@ -1,0 +1,560 @@
+// Responsive and accessibility adjustments. Keep page-specific rules in the documents layer.
+@use "../tokens" as tokens;
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 1120px) {
+  .workbench {
+    grid-template-columns: 200px minmax(430px, 1fr) 255px;
+  }
+  .chrome {
+    grid-template-columns: 215px 1fr 255px;
+  }
+  .editor-content {
+    padding-left: 38px;
+    padding-right: 38px;
+  }
+  .panel-block {
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+}
+
+@media (max-width: 850px) {
+  .desktop {
+    height: 100dvh;
+    min-height: 560px;
+    border: 0;
+  }
+  .chrome {
+    height: 42px;
+    grid-template-columns: 1fr auto;
+    padding: 0 13px;
+  }
+  .chrome-center,
+  .chrome-right {
+    display: none;
+  }
+  .mobile-files {
+    display: block;
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 5px 8px;
+    color: var(--text);
+    font: 10px var(--mono);
+  }
+  .mobile-files span {
+    color: var(--green);
+    margin-left: 5px;
+  }
+  .workbench {
+    display: block;
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+  .sidebar {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: min(280px, 84vw);
+    box-shadow: 10px 0 35px #0008;
+    transform: translateX(-105%);
+    transition: transform 0.22s ease;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .editor-shell {
+    height: 100%;
+    min-height: 0;
+  }
+  .system-panel {
+    display: none;
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: min(315px, 90vw);
+    box-shadow: -12px 0 35px #0008;
+  }
+  .system-panel.open {
+    display: flex;
+  }
+  .panel-top button {
+    display: block;
+  }
+  .editor-content {
+    padding: 25px clamp(20px, 6vw, 55px) 35px;
+  }
+  .terminal {
+    height: 162px;
+  }
+  .tabbar .editor-action {
+    width: 34px;
+  }
+}
+
+@media (max-width: 540px) {
+  .chrome {
+    height: 40px;
+  }
+  .identity {
+    font-size: 11px;
+  }
+  .tab {
+    width: 145px;
+    font-size: 9px;
+  }
+  .breadcrumbs {
+    padding: 0 11px;
+    font-size: 9px;
+  }
+  .crumb-right {
+    font-size: 8px;
+  }
+  .editor-content {
+    padding: 22px 17px 28px;
+  }
+  .terminal {
+    height: 158px;
+  }
+  .terminal-history {
+    padding: 10px 12px 0;
+    font-size: 10px;
+  }
+  .command-line {
+    padding-left: 12px;
+    padding-right: 9px;
+    gap: 7px;
+    font-size: 9px;
+  }
+  .command-line .shell-prompt {
+    font-size: 9px;
+  }
+  .command-line input {
+    font-size: 10px;
+  }
+  .statusbar {
+    gap: 10px;
+    padding: 0 8px;
+    font-size: 8px;
+  }
+  .statusbar span:nth-last-child(2) {
+    display: none;
+  }
+  .doc h1 {
+    font-size: 27px;
+  }
+  .doc .lead {
+    font-size: 12px;
+  }
+  .doc p {
+    font-size: 11px;
+  }
+  .doc .file-grid {
+    grid-template-columns: 1fr;
+  }
+  .doc .stat {
+    min-width: calc(50% - 5px);
+    flex: 1;
+  }
+  .doc .timeline-item span {
+    float: none;
+    display: block;
+    margin-top: 4px;
+  }
+  .doc .codebox {
+    padding: 12px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 850px) {
+  .desktop {
+    min-height: 0;
+  }
+  .nav-groups {
+    overflow-y: auto;
+  }
+}
+
+@media (min-width: 1300px) {
+  .chrome {
+    position: relative;
+    display: flex;
+    gap: 12px;
+  }
+  .identity {
+    flex: none;
+    margin-right: auto;
+  }
+  .chrome-center {
+    position: absolute;
+    left: 50%;
+    justify-self: auto;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .chrome-right {
+    margin-left: auto;
+    justify-self: auto;
+    white-space: nowrap;
+  }
+  .global-search,
+  .theme-picker {
+    flex: none;
+  }
+}
+
+@media (max-width: 1120px) {
+  .chrome {
+    grid-template-columns:
+      180px minmax(40px, 1fr) auto minmax(150px, 190px)
+      auto;
+    gap: 8px;
+  }
+  .global-search {
+    font-size: 8px;
+    padding: 6px;
+  }
+  .global-search kbd {
+    display: none;
+  }
+  .workbench:has(.system-panel.collapsed) {
+    grid-template-columns: 200px minmax(430px, 1fr) 0;
+  }
+}
+
+@media (max-width: 850px) {
+  .chrome {
+    grid-template-columns: 1fr auto auto auto;
+    padding: 0 13px;
+    gap: 10px;
+  }
+  .chrome-center,
+  .chrome-right {
+    display: none;
+  }
+  .global-search {
+    justify-self: end;
+    width: 34px;
+    height: 30px;
+    justify-content: center;
+    padding: 0;
+  }
+  .global-search kbd,
+  .global-search:not(:hover) {
+    font-size: 0;
+  }
+  .global-search:not(:hover) {
+    color: transparent;
+  }
+  .global-search > span {
+    font-size: 17px;
+  }
+  .theme-picker {
+    justify-self: end;
+  }
+  .theme-picker > span {
+    display: none;
+  }
+  .system-panel {
+    display: none;
+  }
+  .system-panel.open {
+    display: flex;
+  }
+  .side-title button {
+    display: block;
+  }
+  .workbench:has(.sidebar.open) .editor-shell {
+    pointer-events: none;
+  }
+  .workbench:has(.system-panel.open) .system-panel {
+    display: flex;
+  }
+}
+
+@media (max-width: 540px) {
+  .chrome {
+    grid-template-columns: 1fr auto auto auto;
+    gap: 5px;
+    padding: 0 8px;
+  }
+  .theme-picker select {
+    max-width: 80px;
+    padding-left: 6px;
+    padding-right: 16px;
+    font-size: 9px;
+    background-position:
+      calc(100% - 8px) 10px,
+      calc(100% - 4px) 10px;
+  }
+  .identity {
+    font-size: 10px;
+  }
+  .mobile-files {
+    font-size: 9px;
+    padding: 5px 6px;
+  }
+  .tab {
+    width: 150px;
+  }
+  .terminal-tabs {
+    gap: 7px;
+    padding: 0 9px;
+  }
+  .quick-command {
+    padding: 4px 6px;
+    font-size: 8px;
+  }
+  .terminal-status {
+    font-size: 8px;
+  }
+  .statusbar span:nth-child(4) {
+    display: none;
+  }
+  .search-footer {
+    font-size: 7px;
+  }
+}
+
+@media (max-width: 900px) {
+  .doc .project-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  .workbench:has(.system-panel.collapsed) {
+    grid-template-columns: 200px minmax(430px, 1fr) 0;
+  }
+}
+
+@media (max-width: 540px) {
+  .identity-strip {
+    gap: 8px;
+    font-size: 8px;
+    flex-wrap: wrap;
+  }
+  .doc .project-cards {
+    grid-template-columns: 1fr;
+  }
+  .project-tile {
+    min-height: 118px !important;
+  }
+  .project-index-row {
+    grid-template-columns: 25px minmax(0, 1fr);
+    gap: 9px;
+    padding: 16px 2px;
+  }
+  .index-arrow {
+    grid-column: 2;
+    justify-self: start;
+  }
+  .index-copy > b {
+    font-size: 12px;
+  }
+  .interactive-callout {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .home-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .doc-top-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .section-line {
+    align-items: flex-start;
+  }
+  .primary-action,
+  .secondary-action {
+    font-size: 9px;
+    padding: 10px;
+    gap: 10px;
+  }
+  .search-scrim {
+    padding-top: 11vh;
+  }
+}
+
+@media (max-width: 720px) {
+  .skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .article-grid {
+    grid-template-columns: 1fr;
+  }
+  .article-card:first-child {
+    grid-column: span 1;
+  }
+  .campus-art {
+    height: 190px;
+  }
+  .campus-building {
+    left: 10%;
+    right: 10%;
+  }
+  .education-record {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+}
+
+@media (max-width: 440px) {
+  .skill-grid {
+    grid-template-columns: 1fr;
+  }
+  .skill-card {
+    min-height: 48px;
+  }
+  .article-card h2 {
+    font-size: 14px;
+  }
+  .campus-caption {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 850px) {
+  .tabbar .inspector-toggle {
+    width: 96px;
+    min-width: 96px;
+    flex: 0 0 96px;
+    justify-content: center;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 360px) {
+  .tabbar .tab {
+    width: 124px;
+  }
+  .tabbar .inspector-toggle {
+    width: 88px;
+    min-width: 88px;
+    flex-basis: 88px;
+    padding: 0 6px;
+  }
+}
+
+@media (max-width: 850px) {
+  .mobile-files {
+    width: 34px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .hamburger-icon {
+    width: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .hamburger-icon i {
+    display: block;
+    height: 1.5px;
+    width: 15px;
+    background: currentColor;
+    border-radius: 2px;
+  }
+  .mobile-files[aria-expanded="true"] .hamburger-icon i:nth-child(2) {
+    width: 10px;
+  }
+  .theme-picker {
+    position: relative;
+    width: 40px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+  .theme-picker .theme-label {
+    display: none;
+  }
+  .theme-picker .theme-icon {
+    display: block;
+    position: absolute;
+    left: 5px;
+    top: 4px;
+    z-index: 0;
+    color: var(--green);
+    font: 17px/20px var(--sans);
+    pointer-events: none;
+  }
+  .theme-picker select {
+    position: relative;
+    z-index: 1;
+    width: 40px;
+    height: 30px;
+    max-width: 40px;
+    padding: 0 0 0 4px;
+    color: transparent;
+    background-color: transparent;
+    background-position:
+      calc(100% - 8px) 12px,
+      calc(100% - 4px) 12px;
+  }
+  .theme-picker select option {
+    color: var(--text);
+    background: var(--panel);
+  }
+}
+
+@media (max-width: 540px) {
+  .theme-picker {
+    width: 36px;
+  }
+  .theme-picker select {
+    width: 36px;
+    max-width: 36px;
+  }
+}
+
+@media (max-width: 850px) {
+  .mobile-files .hamburger-icon {
+    margin-left: 0;
+    color: inherit;
+  }
+  .mobile-files .hamburger-icon i {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 850px) {
+  .global-search .search-icon {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+@include tokens.mobile-only {
+  .global-search .search-icon {
+    width: 17px;
+    height: 17px;
+  }
+}

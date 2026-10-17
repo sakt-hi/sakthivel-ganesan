@@ -1,0 +1,675 @@
+@use "sass:map";
+
+$themes: (
+  "terminal": (
+    "mode": dark,
+    "bg": #101311,
+    "chrome": #191d1a,
+    "panel": #151916,
+    "raised": #1d221e,
+    "line": #303731,
+    "line-soft": #252b26,
+    "text": #d7ded7,
+    "muted": #89948b,
+    "faint": #5e6961,
+    "green": #8ccf79,
+    "green-deep": #528950,
+    "orange": #e0a66f,
+    "blue": #87b9d6,
+  ),
+  "ocean": (
+    "mode": dark,
+    "bg": #111824,
+    "chrome": #10151d,
+    "panel": #151d29,
+    "raised": #1b2633,
+    "line": #2b3949,
+    "line-soft": #202d3a,
+    "text": #d6e1ee,
+    "muted": #91a3b6,
+    "faint": #687c8f,
+    "green": #75d4ca,
+    "green-deep": #337f83,
+    "orange": #edaa78,
+    "blue": #8cbcf1,
+  ),
+  "forest": (
+    "mode": dark,
+    "bg": #101713,
+    "chrome": #151f19,
+    "panel": #17221a,
+    "raised": #202d22,
+    "line": #354638,
+    "line-soft": #29382b,
+    "text": #dce8dc,
+    "muted": #9bad9c,
+    "faint": #718675,
+    "green": #a3d18c,
+    "green-deep": #668d59,
+    "orange": #e1b078,
+    "blue": #8bbec0,
+  ),
+  "midnight": (
+    "mode": dark,
+    "bg": #141321,
+    "chrome": #1a1928,
+    "panel": #1c1b2b,
+    "raised": #27263a,
+    "line": #3c3a54,
+    "line-soft": #302e45,
+    "text": #e1def2,
+    "muted": #aaa5c3,
+    "faint": #797591,
+    "green": #b0a0ff,
+    "green-deep": #786bc0,
+    "orange": #f0ab82,
+    "blue": #91c5ee,
+  ),
+  "ember": (
+    "mode": dark,
+    "bg": #19120f,
+    "chrome": #211713,
+    "panel": #241a15,
+    "raised": #30221a,
+    "line": #4b3428,
+    "line-soft": #38271f,
+    "text": #f0e1d5,
+    "muted": #b5a092,
+    "faint": #897365,
+    "green": #e6a16d,
+    "green-deep": #a4613e,
+    "orange": #f2c47d,
+    "blue": #9abed0,
+  ),
+  "cloud": (
+    "mode": light,
+    "bg": #f1f4f7,
+    "chrome": #e8edf2,
+    "panel": #ffffff,
+    "raised": #e5ebf1,
+    "line": #cbd5df,
+    "line-soft": #dce4eb,
+    "text": #253342,
+    "muted": #5e6e7d,
+    "faint": #8291a0,
+    "green": #267a5b,
+    "green-deep": #286b54,
+    "orange": #a56135,
+    "blue": #376e9a,
+  ),
+  "mint": (
+    "mode": light,
+    "bg": #edf5f0,
+    "chrome": #e2eee7,
+    "panel": #f9fdf9,
+    "raised": #dcebe1,
+    "line": #c3d7c9,
+    "line-soft": #d3e3d8,
+    "text": #24382d,
+    "muted": #587062,
+    "faint": #80978a,
+    "green": #28764c,
+    "green-deep": #276c48,
+    "orange": #a35d36,
+    "blue": #3d7181,
+  ),
+  "lavender": (
+    "mode": light,
+    "bg": #f3f0f8,
+    "chrome": #eae5f2,
+    "panel": #fcfaff,
+    "raised": #e6e0f0,
+    "line": #d2c9e1,
+    "line-soft": #e0d9eb,
+    "text": #332b43,
+    "muted": #6b607d,
+    "faint": #9186a2,
+    "green": #6650a4,
+    "green-deep": #5c4994,
+    "orange": #a85e45,
+    "blue": #4675a2,
+  ),
+  "sand": (
+    "mode": light,
+    "bg": #f5f0e7,
+    "chrome": #ece4d7,
+    "panel": #fffdf8,
+    "raised": #e9dfd0,
+    "line": #d8cbb8,
+    "line-soft": #e7dccd,
+    "text": #3b3026,
+    "muted": #766656,
+    "faint": #a08d79,
+    "green": #587447,
+    "green-deep": #4d693e,
+    "orange": #a95f37,
+    "blue": #4b7181,
+  ),
+  "rose": (
+    "mode": light,
+    "bg": #f7eff0,
+    "chrome": #efe3e6,
+    "panel": #fffafb,
+    "raised": #eedfe3,
+    "line": #ddc9cf,
+    "line-soft": #ead9de,
+    "text": #402d34,
+    "muted": #795f68,
+    "faint": #a18891,
+    "green": #9a4e68,
+    "green-deep": #83435a,
+    "orange": #a5623d,
+    "blue": #557798,
+  ),
+);
+
+@each $name, $values in $themes {
+  .theme-#{$name} {
+    @each $token, $value in $values {
+      @if $token != "mode" {
+        --#{$token}: #{$value};
+      }
+    }
+
+    color-scheme: map.get($values, mode);
+    background: var(--bg);
+  }
+}
+
+.theme-light {
+  // Readable accent for text and small controls on light surfaces. Theme accent
+  // colors remain available for icon fills and decorative details.
+  --accent-readable: var(--green-deep);
+  --hover-bg: color-mix(in srgb, var(--green) 12%, var(--panel));
+  --hover-border: var(--green-deep);
+  --hover-text: var(--text);
+  --button-primary-hover: var(--green-deep);
+  --button-primary-hover-text: #fff;
+  --sidebar-bg: var(--chrome);
+  --sidebar-hover: color-mix(in srgb, var(--green) 12%, var(--panel));
+  --sidebar-active: color-mix(in srgb, var(--green) 21%, var(--panel));
+  --sidebar-text: var(--text);
+  --sidebar-muted: var(--muted);
+  --sidebar-accent: var(--green);
+  --statusbar-bg: var(--green-deep);
+  --statusbar-text: #fff;
+  --tool-icon-bg: color-mix(in srgb, var(--green) 8%, var(--panel));
+  --tool-icon-border: color-mix(in srgb, var(--green) 38%, var(--line));
+  --tool-icon-color: var(--green);
+
+  .chrome,
+  .sidebar,
+  .system-panel {
+    background: var(--chrome);
+    color: var(--text);
+  }
+
+  .desktop {
+    border-color: var(--line);
+  }
+
+  .chrome-center,
+  .identity-dim,
+  .editor-action,
+  .breadcrumbs,
+  .crumb-right,
+  .terminal-tabs,
+  .history-note,
+  .command-line input::placeholder,
+  .panel-top,
+  .identity-block small,
+  .block-label,
+  .trace-run,
+  .trace-row small,
+  .trace-row em,
+  .trace-foot span:last-child,
+  .cap-note,
+  .panel-bottom > span {
+    color: var(--muted);
+  }
+
+  .tabbar {
+    background: var(--chrome);
+  }
+
+  .tab {
+    background: var(--panel);
+    color: var(--text);
+  }
+
+  .tab b,
+  .command-line input,
+  .history-line,
+  .terminal-tab.selected,
+  .panel-top button,
+  .trace-question,
+  .trace-row b,
+  .cap-line {
+    color: var(--text);
+  }
+
+  .system-panel {
+    background: var(--chrome);
+  }
+
+  .terminal-tabs,
+  .terminal,
+  .panel-top,
+  .panel-block,
+  .trace-foot {
+    border-color: var(--line);
+  }
+
+  .trace-question,
+  .avatar-mark,
+  .focus-tags span,
+  .toast {
+    background: var(--panel);
+    border-color: var(--line);
+    color: var(--text);
+  }
+
+  .avatar-mark {
+    color: var(--accent-readable);
+  }
+
+  .focus-title,
+  .trace-row em.ok,
+  .panel-bottom a,
+  .trace-foot {
+    color: var(--accent-readable);
+  }
+
+  .focus-title {
+    color: var(--text);
+  }
+
+  .trace-node {
+    border-color: var(--line);
+    color: var(--accent-readable);
+  }
+
+  .trace-node.source {
+    color: var(--orange);
+    border-color: var(--line);
+  }
+
+  .trace-connector {
+    border-color: var(--line);
+  }
+
+  .cap-line i {
+    background: var(--raised);
+  }
+
+  .cap-line i b {
+    background: var(--green-deep);
+  }
+
+  .run-command {
+    color: var(--accent-readable);
+    border-color: var(--line);
+    background: var(--raised);
+  }
+
+  .run-command:hover,
+  .editor-action:hover {
+    background: var(--raised);
+    color: var(--accent-readable);
+  }
+
+  .live-indicator {
+    box-shadow: none;
+  }
+
+  .editor-content,
+  .nav-groups {
+    scrollbar-color: var(--faint) transparent;
+  }
+
+  .editor-shell,
+  .desktop {
+    background: var(--bg);
+  }
+
+  .tabbar,
+  .terminal {
+    background: var(--panel);
+  }
+
+  .tab,
+  .trace-question,
+  .trace-explanation,
+  .doc .codebox,
+  .doc .stat,
+  .doc .file-grid button,
+  .doc .file-link,
+  .theme-picker select,
+  .quick-command,
+  .global-search,
+  .search-dialog,
+  .show-more-button,
+  .skill-card,
+  .article-card,
+  .campus-card,
+  .interactive-callout {
+    background: var(--panel);
+    color: var(--text);
+    border-color: var(--line);
+  }
+
+  .file,
+  .focus-copy,
+  .trace-row small,
+  .doc p,
+  .doc li,
+  .toolkit-group h2,
+  .article-card-top,
+  .article-card p {
+    color: var(--muted);
+  }
+
+  .file.active,
+  .nav-item.active,
+  .project-index-row:hover,
+  .home-bottom,
+  .focus-tags span {
+    background: var(--raised);
+    color: var(--text);
+  }
+
+  .doc h1,
+  .doc h2,
+  .doc h3,
+  .article-card h2,
+  .education-record h2,
+  .project-tile > b,
+  .interactive-callout b,
+  .identity-block b,
+  .focus-title,
+  .trace-row b {
+    color: var(--text);
+  }
+
+  .skill-icon {
+    background: var(--raised);
+    border-color: var(--line);
+  }
+
+  .article-card > a,
+  .campus-caption a,
+  .education-record a {
+    color: var(--green);
+  }
+
+  .credential-strip,
+  .education-record {
+    border-color: var(--line);
+    color: var(--muted);
+  }
+
+  .statusbar {
+    color: var(--statusbar-text);
+  }
+
+  .file:hover,
+  .show-more-nav:hover {
+    background: var(--sidebar-hover);
+    color: var(--sidebar-text);
+  }
+
+  .file.active,
+  .nav-item.active {
+    background: var(--sidebar-active);
+    color: var(--sidebar-text);
+  }
+
+  .tree-root,
+  .tree-folder,
+  .branch {
+    color: var(--sidebar-muted);
+  }
+
+  .folder-icon,
+  .chevron,
+  .nav-dot,
+  .show-more-nav .more-caret,
+  .file-icon,
+  .branch > span:first-child,
+  .branch-status {
+    color: var(--sidebar-accent);
+  }
+
+  // Document content used to carry colors from the original dark palette.
+  // Keep the editor aesthetic while giving every light theme readable text,
+  // syntax, links, and borders.
+  .doc {
+    color: var(--text);
+  }
+
+  .doc .doc-path,
+  .doc .muted,
+  .doc .comment,
+  .doc .timeline-item span,
+  .doc .timeline-item small,
+  .doc .home-bottom > span,
+  .doc .interactive-callout small,
+  .doc .skill-arrow,
+  .doc .article-card-top,
+  .doc .campus-caption,
+  .doc .education-years,
+  .doc .stat span,
+  .doc .file-grid small {
+    color: var(--muted);
+  }
+
+  .doc h1,
+  .doc h2,
+  .doc h3,
+  .doc .timeline-item b,
+  .doc .project-tile > b,
+  .doc .interactive-callout b,
+  .doc .article-card h2,
+  .doc .education-record h2,
+  .doc .education-record b,
+  .doc .stat b,
+  .doc .skill-card,
+  .doc .file-grid button,
+  .doc .project-index-row {
+    color: var(--text);
+  }
+
+  .doc p,
+  .doc li,
+  .doc .lead,
+  .doc .project-tile > small,
+  .doc .article-card p,
+  .doc .education-record p {
+    color: var(--muted) !important;
+  }
+
+  .doc .project-tile .tile-open,
+  .doc .project-stamp,
+  .doc .index-copy .project-stamp,
+  .doc .tag,
+  .doc .credential-strip > span,
+  .doc .principle-list article > span,
+  .doc .callout-label,
+  .doc .article-card > a,
+  .doc .campus-caption a,
+  .doc .education-record a,
+  .doc .contact-email,
+  .doc .prompt-line,
+  .doc li:before,
+  .doc .codebox .key,
+  .doc .inline-code {
+    color: var(--accent-readable);
+  }
+
+  .doc .codebox,
+  .doc .stat,
+  .doc .file-grid button,
+  .doc .file-link,
+  .doc .project-index-row:hover,
+  .doc .interactive-callout,
+  .doc .skill-card,
+  .doc .article-card,
+  .doc .campus-card,
+  .doc .education-record,
+  .doc .contact-email,
+  .doc .inline-code {
+    background: var(--panel);
+    border-color: var(--line);
+  }
+
+  .doc .codebox {
+    color: var(--text);
+    border-left-color: var(--green-deep);
+  }
+
+  .doc .codebox .val,
+  .doc .link-icon {
+    color: var(--orange);
+  }
+
+  .doc .codebox .dim {
+    color: var(--muted);
+  }
+
+  .doc .tag {
+    background: var(--raised);
+    border-color: var(--line);
+  }
+
+  .doc .project-stamp,
+  .doc .file-link,
+  .doc .contact-email {
+    border-color: var(--line);
+  }
+
+  .doc .section-rule,
+  .doc .project-index,
+  .doc .project-index-row,
+  .doc .principle-list,
+  .doc .principle-list article,
+  .doc .credential-strip,
+  .doc .article-card > a {
+    border-color: var(--line);
+  }
+
+  .doc .timeline {
+    border-color: var(--line);
+  }
+
+  .doc .timeline-item:before {
+    background: var(--green-deep);
+    border-color: var(--bg);
+  }
+
+  .doc .home-bottom {
+    border-color: var(--line);
+    background: var(--raised);
+    color: var(--text);
+  }
+
+  .doc .home-bottom button,
+  .doc .home-bottom button:hover {
+    color: var(--text);
+  }
+
+  .doc .home-bottom button span {
+    color: var(--accent-readable);
+  }
+
+  .doc .file-link:hover,
+  .doc .file-grid button:hover,
+  .doc .contact-email:hover,
+  .doc .project-index-row:hover,
+  .doc .article-card > a:hover,
+  .show-more-button:hover,
+  .theme-picker select:hover {
+    border-color: var(--hover-border);
+    background-color: var(--hover-bg);
+    color: var(--hover-text);
+  }
+
+  .doc .home-bottom button:hover {
+    color: var(--hover-text);
+  }
+}
+
+.theme-dark {
+  --accent-readable: var(--green);
+  --hover-bg: color-mix(in srgb, var(--green) 16%, var(--panel));
+  --hover-border: var(--green);
+  --hover-text: var(--text);
+  --button-primary-hover: color-mix(in srgb, var(--green) 82%, white);
+  --button-primary-hover-text: var(--bg);
+  --sidebar-bg: color-mix(in srgb, var(--chrome) 80%, var(--bg));
+  --sidebar-hover: color-mix(in srgb, var(--green) 13%, var(--panel));
+  --sidebar-active: color-mix(in srgb, var(--green) 23%, var(--panel));
+  --sidebar-text: var(--text);
+  --sidebar-muted: var(--muted);
+  --sidebar-accent: var(--green);
+  --statusbar-bg: color-mix(in srgb, var(--green-deep) 76%, #000);
+  --statusbar-text: #fff;
+  --tool-icon-bg: color-mix(in srgb, var(--green) 11%, var(--panel));
+  --tool-icon-border: color-mix(in srgb, var(--green) 38%, var(--line));
+  --tool-icon-color: var(--green);
+
+  .chrome,
+  .sidebar,
+  .system-panel {
+    background: var(--chrome);
+  }
+
+  .editor-shell,
+  .desktop {
+    background: var(--bg);
+  }
+
+  .tabbar,
+  .terminal {
+    background: var(--panel);
+  }
+
+  .theme-picker select,
+  .quick-command,
+  .global-search {
+    background-color: var(--raised);
+    color: var(--text);
+    border-color: var(--line);
+  }
+
+  .file:hover,
+  .show-more-nav:hover {
+    background: var(--sidebar-hover);
+    color: var(--sidebar-text);
+  }
+
+  .file.active,
+  .nav-item.active {
+    background: var(--sidebar-active);
+    color: var(--sidebar-text);
+  }
+
+  .tree-root,
+  .tree-folder,
+  .side-title,
+  .nav-group-title,
+  .file-hint,
+  .show-more-nav small,
+  .branch {
+    color: var(--sidebar-muted);
+  }
+
+  .folder-icon,
+  .chevron,
+  .nav-dot,
+  .show-more-nav .more-caret,
+  .file-icon,
+  .branch > span:first-child,
+  .branch-status {
+    color: var(--sidebar-accent);
+  }
+}

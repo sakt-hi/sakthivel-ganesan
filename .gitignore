@@ -1,0 +1,22 @@
+# Dependencies
+/node_modules/
+
+# Next.js build output
+/.next/
+/out/
+
+# Deployment tooling
+/.netlify/
+/.vercel/
+
+# Local environment files
+.env*
+!.env.example
+
+# Test and typecheck output
+/coverage/
+*.tsbuildinfo
+
+# Local/editor files
+.DS_Store
+prototype-static/

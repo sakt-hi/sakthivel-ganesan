@@ -1,0 +1,83 @@
+@use "../tokens" as tokens;
+
+.ui-button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: tokens.$space-2;
+  border: 1px solid transparent;
+  border-radius: tokens.$radius-sm;
+  color: inherit;
+  font: inherit;
+  line-height: 1.25;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+
+  &:focus-visible {
+    @include tokens.focus-ring;
+  }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):active {
+    transform: translateY(1px);
+  }
+
+  &--primary {
+    border-color: var(--green);
+    background: var(--green);
+    color: var(--bg);
+  }
+
+  &--secondary {
+    border-color: var(--line);
+    background: var(--raised);
+    color: var(--text);
+  }
+
+  &--quiet {
+    background: transparent;
+    color: var(--text);
+  }
+
+  &--card {
+    display: flex;
+    width: 100%;
+    border-color: var(--line-soft);
+    background: var(--panel);
+  }
+
+  &--small {
+    min-height: 30px;
+    padding: tokens.$space-1 tokens.$space-3;
+    font-size: 0.875em;
+  }
+
+  &--medium {
+    min-height: 38px;
+    padding: tokens.$space-2 tokens.$space-4;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--hover-border);
+    background-color: var(--hover-bg);
+    color: var(--hover-text);
+  }
+
+  &--primary:hover:not(:disabled) {
+    border-color: var(--button-primary-hover);
+    background: var(--button-primary-hover);
+    color: var(--button-primary-hover-text);
+  }
+}

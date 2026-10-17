@@ -1,0 +1,33 @@
+// Shared browser-level design tokens.
+$palette: (
+  "color-scheme": dark,
+  "bg": #101311,
+  "chrome": #191d1a,
+  "panel": #151916,
+  "raised": #1d221e,
+  "line": #303731,
+  "line-soft": #252b26,
+  "text": #d7ded7,
+  "muted": #89948b,
+  "faint": #5e6961,
+  "green": #8ccf79,
+  "green-deep": #528950,
+  "orange": #e0a66f,
+  "blue": #87b9d6,
+  "mono": (
+    "IBM Plex Mono",
+    "DM Mono",
+    monospace,
+  ),
+  "sans": (
+    "Manrope",
+    Arial,
+    sans-serif,
+  ),
+);
+
+:root {
+  @each $name, $value in $palette {
+    --#{$name}: #{$value};
+  }
+}

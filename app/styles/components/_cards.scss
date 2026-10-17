@@ -1,0 +1,32 @@
+@use "../tokens" as tokens;
+
+.ui-card {
+  min-width: 0;
+  border: 1px solid var(--line-soft);
+  border-radius: tokens.$radius-sm;
+  background: var(--panel);
+  color: var(--text);
+
+  &--raised {
+    border-color: var(--line);
+    background: var(--raised);
+  }
+
+  &--interactive {
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      transform 160ms ease;
+
+    &:hover {
+      border-color: var(--hover-border);
+      background: var(--hover-bg);
+      transform: translateY(-2px);
+    }
+
+    &:focus-visible {
+      @include tokens.focus-ring;
+    }
+  }
+}
