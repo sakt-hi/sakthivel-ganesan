@@ -1,4 +1,4 @@
-# Sakthivel Ganesan — Full-Stack AI Engineer
+# Sakthivel Ganesan — AI Engineer
 
 A personal portfolio built to show how I think about AI systems, not just list the tools I use. Explore my work through an interactive, editor-inspired workspace covering retrieval-augmented generation, AI agents, document intelligence, and full-stack engineering.
 

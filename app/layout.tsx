@@ -2,9 +2,39 @@ import type { Metadata } from "next";
 import "./globals.scss";
 
 export const metadata: Metadata = {
-  title: "Sakthivel Ganesan — AI systems engineer",
+  title: "Sakthivel Ganesan - AI Engineer",
   description:
-    "Explore the AI systems, retrieval experiments, and engineering work of Sakthivel Ganesan.",
+    "Sakthivel Ganesan is an AI engineer building reliable generative AI systems, RAG applications, AI agents, and full-stack products.",
+  applicationName: "Sakthivel Ganesan - AI Engineer",
+  authors: [{ name: "Sakthivel Ganesan" }],
+  creator: "Sakthivel Ganesan",
+  keywords: [
+    "Sakthivel Ganesan",
+    "AI Engineer",
+    "Generative AI",
+    "RAG",
+    "AI Agents",
+    "Full-Stack Engineer",
+    "Chennai",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "Sakthivel Ganesan - AI Engineer",
+    title: "Sakthivel Ganesan - AI Engineer",
+    description:
+      "AI engineer building reliable generative AI systems, RAG applications, AI agents, and full-stack products.",
+  },
+  twitter: {
+    card: "summary",
+    title: "Sakthivel Ganesan - AI Engineer",
+    description:
+      "AI engineer building reliable generative AI systems, RAG applications, AI agents, and full-stack products.",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
